@@ -329,3 +329,27 @@ h1 {
 .content ul.settings li.alertMessage span.message {
     color: red;
 }
+
+/* Custom CSS */
+
+.custom div.controlpanelButton {
+  margin: 30px 10px 10px 10px;
+  height: 90px;
+  line-height: 45px;
+  -webkit-appearance: push-button;
+}
+.custom div.controlpanelButton a {
+  display: block;
+/*   width: 100%; */
+  color: black;
+  text-align: center;
+}
+
+.custom div .controlpanelButton .active{
+  width: 284px;
+  background-color: #f00;
+}
+.custom div .controlpanelButton .inactive{
+  width: 142px;
+  background-color: #f00;
+}
