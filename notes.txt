@@ -14,3 +14,7 @@ Work on intro page
 * Remove login button
 * Add link to Dishwasher index page
 * Clean up New dishwasher to show only Name entry box.
+
+TODOs:
+- Figure out the actual Clean/Dirty interface. Buttons? CSS? jQuery?
+- Shortcuts in case of single dishwasher
