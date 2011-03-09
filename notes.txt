@@ -1,0 +1,16 @@
+**********************************************************************
+Date: 03/08/2011
+
+Initial app: Get a simple app with multiple dishwashers, and then
+restrict to the single case
+
+  rhodes app CleanOrDirty
+  git init
+  rhodes model Dishwasher code,name,status
+  find -name *.bb.erb -exec rm -f {} \;
+  git add .
+
+Work on intro page
+* Remove login button
+* Add link to Dishwasher index page
+* Clean up New dishwasher to show only Name entry box.
