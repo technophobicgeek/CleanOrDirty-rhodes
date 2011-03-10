@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var buttons = $('#controls .controlpanelButton');
+  var buttons = $('standardButton');
   buttons.bind('click',function(){
   });
 });

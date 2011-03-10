@@ -15,9 +15,16 @@ module DishwasherHelper
 
   def create_dishwasher
     @dishwasher = Dishwasher.create(@params['dishwasher'])
-    $has_dishwasher = true
-    $dishwasher = @dishwasher
     WebView.navigate Rho::RhoConfig.start_path
+  end
+
+  def show_or_create_dishwasher
+    @dishwasher = Dishwasher.find(:first)
+    if @dishwasher
+      render :action => :show
+    else
+      new
+    end
   end
   
 end
