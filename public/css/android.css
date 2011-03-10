@@ -331,7 +331,16 @@ h1 {
 }
 
 /* Custom CSS */
+
+.custom {
+  width: 100%;
+  display: table;
+  text-align: center;
+  border-spacing: 10px;
+}
+
 .custom span {
+  display: table-cell;
   margin-left:auto;
   margin-right:auto;
 }
