@@ -7,6 +7,8 @@ build: debug
 bbver: 4.6
 wmsdk: "Windows Mobile 6 Professional SDK (ARMV4I)"
 applog: rholog.txt
+android:
+  version: 2.1
 iphone:
   configuration: Debug
   sdk: iphonesimulator4.0

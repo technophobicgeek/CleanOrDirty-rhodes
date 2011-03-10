@@ -15,6 +15,6 @@ class AppApplication < Rho::RhoApplication
     # SyncEngine.set_notification(-1, "/app/Settings/sync_notify", '')
 
     $has_dishwasher = false
-    
+    $dishwasher = nil
   end
 end

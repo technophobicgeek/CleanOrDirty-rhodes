@@ -17,27 +17,15 @@ Requirement:
   </ul>  
 </div>
 
-<!--
-  Need an animated transition here using jQTouch
-  Or something clever with CSS and radio buttons
--->
-
-<!-- dummy link for ajax calls -->
-<!--<div id="#dummy"></div>
-
-
-<div id="controls" class="custom">
-  <% ['Clean','Dirty'].each do |cmd| %>
-    <div class="controlpanelButton">
-      <a href="#dummy"><%= cmd %></a>
-    </div>
-  <% end %>
-</div>
-
-<script src="/public/js/application.js" type="text/javascript"></script>-->
 
 <div class="custom">
   <span class="status">
     <%= @dishwasher.status %>
   </span>
+</div>
+
+<div class="content">
+    <div class="standardButton">
+      <a href="<%=url_for :action => :change_status, :id => @dishwasher.object %>">Change</a>
+    </div>
 </div>

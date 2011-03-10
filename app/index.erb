@@ -11,13 +11,26 @@ Eventual functionality:
   * If there is only one dishwasher, go to it's show page
   * Else go to dishwasher index page
 -->
-<div class="content">
-  <ul>
-    <li>
-      <a href="<%= url_for :controller => :Dishwasher, :action => :index %>">
-        <span class="title">Dishwashers</span>
-        <span class="disclosure_indicator"/>
-      </a>
-    </li>
-  </ul>
-</div>
+
+
+<% if $has_dishwasher %>
+
+  <%
+    WebView.navigate url_for(
+      :controller => :Dishwasher,
+      :action => :show,
+      :id => $dishwasher.object
+    )
+  %>
+
+<% else %>
+
+  <%
+    WebView.navigate url_for(
+      :controller => :Dishwasher,
+      :action => :new
+    )
+  %>
+
+<% end %>
+v>

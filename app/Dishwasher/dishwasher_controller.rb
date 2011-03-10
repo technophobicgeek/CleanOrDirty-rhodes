@@ -60,4 +60,5 @@ class DishwasherController < Rho::RhoController
     @dishwasher.destroy if @dishwasher
     redirect :action => :index
   end
+  
 end
