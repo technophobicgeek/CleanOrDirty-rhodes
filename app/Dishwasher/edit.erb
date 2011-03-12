@@ -6,13 +6,10 @@
   <div class="leftItem backButton">
     <a href="<%= url_for :action => :show, :id => @dishwasher.object %>">Cancel</a>
   </div>
-  <div class="rightItem regularButton">
-    <a class="button" href="<%= url_for :action => :delete, :id => @dishwasher.object %>">Delete</a>
-  </div>
 </div>
 
 <div class="content">
-  <form method="POST" action="<%= url_for :action => :update %>">
+  <form method="POST" action="<%= url_for :action => :update_dishwasher %>">
     <input type="hidden" name="id" value="<%= @dishwasher.object %>"/>
     <ul>
 
@@ -22,6 +19,6 @@
           </li>
 
     </ul>
-    <input type="submit" class="standardButton" value="Update"/>
+    <input type="submit" class="standardButton" value="Save"/>
   </form>
 </div>

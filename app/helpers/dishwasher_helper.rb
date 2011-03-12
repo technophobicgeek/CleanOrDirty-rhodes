@@ -3,7 +3,7 @@ module DishwasherHelper
     @dishwasher = Dishwasher.find(@params['id'])
     status = @dishwasher.status
     new_status =
-        case status
+        case status # TODO use ternary here?
         when 'clean'
           'dirty'
         when 'dirty'
@@ -25,6 +25,21 @@ module DishwasherHelper
     else
       new
     end
+  end
+  
+  def edit_dishwasher
+    @dishwasher = Dishwasher.find(:first)
+    if @dishwasher
+      render :action => :edit
+    else
+      new
+    end
+  end
+
+  def update_dishwasher
+    @dishwasher = Dishwasher.find(@params['id'])
+    @dishwasher.update_attributes(@params['dishwasher']) if @dishwasher
+    render :action => :show
   end
   
 end

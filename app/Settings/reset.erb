@@ -1,17 +1,19 @@
 <div class="pageTitle">
-  <h1>Reset Database</h1>
+  <h1>Remove Dishwasher</h1>
+</div>
+
+<div class="custom">
+  <span class="confirm">
+    Sure?
+  </span>
 </div>
 
 <div class="toolbar">
   <div class="leftItem backButton">
     <a href="<%= url_for :action => :index %>">Cancel</a>
   </div>
-  <div class="button blueButton">
-    <a href="<%= url_for :action => :do_reset %>">Confirm</a>
+  <div class="rightItem regularButton">
+    <a href="<%= url_for :action => :do_remove_dishwasher %>">Remove</a>
   </div>
 </div>
 
-<div class="content">
-  <h3>Are you sure?</h3>
-  <div style="margin: 10px;">Resetting removes all objects from your device.</div>
-</div>

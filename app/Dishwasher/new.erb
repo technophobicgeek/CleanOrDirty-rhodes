@@ -2,11 +2,7 @@
   <h1>New <%= @dishwasher.title %></h1>
 </div>
 
-<div class="toolbar">
-  <div class="leftItem backButton">
-    <a class="cancel" href="<%= url_for :action => :index %>">Cancel</a>
-  </div>
-</div>
+
 
 <div class="content">
   <form method="POST" action="<%= url_for :action => :create_dishwasher %>">
@@ -21,6 +17,6 @@
 
     </ul>
     <input type="hidden" name="dishwasher[status]" value="dirty"/>
-    <input type="submit" class="standardButton" value="Add"/>
+    <input type="submit" class="standardButton" value="Save"/>
   </form>
 </div>

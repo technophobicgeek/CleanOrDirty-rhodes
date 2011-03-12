@@ -18,3 +18,8 @@ Work on intro page
 TODOs:
 - Figure out the actual Clean/Dirty interface. Buttons? CSS? jQuery?
 - Shortcuts in case of single dishwasher
+
+**********************************************************************
+Date: 03/10/2011
+
+Created and merged rhohub repo

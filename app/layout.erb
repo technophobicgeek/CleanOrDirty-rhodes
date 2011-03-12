@@ -30,6 +30,11 @@
     <% else %>
         <link href="/public/css/windows_mobile.css" type="text/css" rel="stylesheet"/>
     <% end %>
+
+   <% if System::get_property('platform') == 'APPLE' || System::get_property('platform') == 'ANDROID' || is_bb6 %>
+        <link href="/public/css/custom.css" type="text/css" rel="stylesheet"/>
+    <% end %>
+ 
 </head>
 
 <body>

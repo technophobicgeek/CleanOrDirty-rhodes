@@ -1,0 +1,30 @@
+/* Custom CSS */
+
+.custom {
+  width: 100%;
+  display: table;
+  text-align: center;
+  border-spacing: 10px;
+}
+
+.custom span {
+  display: table-cell;
+  margin:auto;
+}
+.custom span.status {
+  text-align: center;
+  font-size : 8em
+}
+
+.custom span.confirm {
+  text-align: center;
+  font-size : 6em
+}
+
+.toolbar .centerItem h1 {
+  font-size : 2em
+}
+
+.toolbar .regularButton .active {
+  background-color: #f00;
+}
