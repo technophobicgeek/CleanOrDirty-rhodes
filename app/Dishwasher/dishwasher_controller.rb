@@ -1,14 +1,16 @@
 require 'rho/rhocontroller'
 require 'helpers/browser_helper'
 require 'helpers/dishwasher_helper'
+require 'helpers/application_helper'
 
 
 # TODO: Default status should be "Dirty"
 
 class DishwasherController < Rho::RhoController
+  include ApplicationHelper
   include BrowserHelper
   include DishwasherHelper
-
+  
   #GET /Dishwasher
   def index
     @dishwashers = Dishwasher.find(:all)

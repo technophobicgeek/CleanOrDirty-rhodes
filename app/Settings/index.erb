@@ -8,12 +8,16 @@
 </div>
 
 <div class="content">
-  <% if Dishwasher.count > 0 %>
-    <ul>
-      <li><a href="<%= url_for :controller => :Dishwasher, :action => :edit_dishwasher %>">Edit Dishwasher</a></li>
-    </ul>
-  <%end%>
   <ul>
-    <li><a href="<%= url_for :action => :reset %>">Remove Dishwasher</a></li>
+    <% if Dishwasher.count > 0 %>
+      <li><a href="<%= url_for :controller => :Dishwasher, :action => :edit_dishwasher %>">Edit Dishwasher</a></li>
+      <li><a href="<%= url_for :action => :reset %>">Remove Dishwasher</a></li>
+      <li>
+         <div class="itemLabel">Code</div>
+         <div class="itemValue">
+          <%=  show_dishwasher_code %>
+         </div>
+      </li>
+    <%end%>
   </ul>
 </div>
