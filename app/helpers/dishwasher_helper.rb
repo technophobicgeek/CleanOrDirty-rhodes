@@ -1,4 +1,5 @@
 require 'json'
+require 'time'
 
 module DishwasherHelper
   
@@ -76,7 +77,12 @@ module DishwasherHelper
       puts "Error in dishwasher_create_callback"
     else
       @dishwasher = Dishwasher.find(:first)
-      @dishwasher.update_attributes({:code => @params['body']['code']})
+      @dishwasher.update_attributes(
+        {
+          :code => @params['body']['code'],
+          :last_updated => Time.now.utc.to_i 
+        }
+      )
     end
   end
 
@@ -101,7 +107,7 @@ module DishwasherHelper
     status = sync_hash['status']
     puts "Returned status #{status}"
     remote_update_TS = sync_hash['last_updated']
-    local_update_TS = @dishwasher.last_updated.to_i
+    local_update_TS = @dishwasher.last_updated
     if remote_update_TS > local_update_TS
       @dishwasher.update_attributes({:status => status})
     else
