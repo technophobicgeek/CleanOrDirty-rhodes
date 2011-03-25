@@ -15,6 +15,7 @@ module DishwasherHelper
 
   def create_dishwasher
     @dishwasher = Dishwasher.create(@params['dishwasher'])
+    @dishwasher.last_updated = 0
     dishwasher_service_create
     render :action => :show
   end
@@ -25,19 +26,28 @@ module DishwasherHelper
   end
   
   def existing_dishwasher
-    @dishwasher = Dishwasher.create(@params['dishwasher'])
-    dishwasher_service_update
-    render :action => :show
+    d_hash = @params['dishwasher']
+    d_hash["last_updated"] = 0
+    @dishwasher = Dishwasher.create(d_hash)
+    puts "Existing dishwasher created: #{d_hash}, #{@dishwasher.last_updated}"
+    dishwasher_service_read   # create dishwasher object, but update
+    #render :action => :show
   end
   
   def show_or_create_dishwasher
     @dishwasher = Dishwasher.find(:first)
     if @dishwasher
       dishwasher_service_read
-      render :action => :show
+      #render :action => :show
     else
       render :action => :new_or_existing
     end
+  end
+
+  def show_dishwasher
+    puts "In show_dishwasher"
+    @dishwasher = Dishwasher.find(:first)
+    render :action => :show
   end
   
   def edit_dishwasher
@@ -95,21 +105,29 @@ module DishwasherHelper
 
   def dishwasher_read_callback
     puts "dishwasher_read_callback: #{@params}"
+    @dishwasher = Dishwasher.find(:first)
     if @params['status'] != 'ok'
       puts "Error in connection in dishwasher_read_callback"
     else
-      @dishwasher = Dishwasher.find(:first)
       synchronize(@params['body'])
     end
+    WebView.navigate(url_for :action => :show_dishwasher)
   end
   
   def synchronize(sync_hash)
-    status = sync_hash['status']
-    puts "Returned status #{status}"
+    remote_status = sync_hash['status']
     remote_update_TS = sync_hash['last_updated']
-    local_update_TS = @dishwasher.last_updated
+    local_update_TS = @dishwasher.last_updated.to_i
+    remote_name = sync_hash['name']
     if remote_update_TS > local_update_TS
-      @dishwasher.update_attributes({:status => status})
+      puts "Remote: #{remote_update_TS}, #{local_update_TS}, #{remote_status}, #{remote_name}"
+      @dishwasher.update_attributes(
+        {
+          :status => remote_status,
+          :last_updated => remote_update_TS,
+          :name => remote_name
+        }
+      )
     else
       dishwasher_service_update
     end
