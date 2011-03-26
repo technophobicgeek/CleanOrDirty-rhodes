@@ -3,7 +3,8 @@ require 'time'
 
 module DishwasherHelper
   
-  @@server_url='http://192.168.15.5:3000/api/v1/dishwashers'
+  #@@server_url='http://192.168.15.5:3000/api/v1/dishwashers'
+  @@server_url='http://cleanordirty.heroku.com/api/v1/dishwashers'
   
   def change_status
     @dishwasher = Dishwasher.find(@params['id'])
