@@ -10,9 +10,16 @@ class AppApplication < Rho::RhoApplication
     
     super
 
-    # Uncomment to set sync notification callback to /app/Settings/sync_notify.
-    # SyncEngine::set_objectnotify_url("/app/Settings/sync_notify")
-    # SyncEngine.set_notification(-1, "/app/Settings/sync_notify", '')
-
+    $current_controller = nil
   end
+
+
+  def on_deactivate_app
+    puts "on_deactivate_app"
+    if $current_controller
+      $current_controller.sync_dishwasher if $sync_status == :failure_to_send
+    end
+    $sync_status = :deactivated
+  end
+
 end

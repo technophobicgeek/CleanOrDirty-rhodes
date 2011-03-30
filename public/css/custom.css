@@ -21,6 +21,11 @@
   font-size : 6em
 }
 
+.custom span.syncing {
+  text-align: center;
+  font-size : 4em
+}
+
 .toolbar .centerItem h1 {
   font-size : 2em
 }

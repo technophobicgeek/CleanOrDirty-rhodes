@@ -1,10 +1,17 @@
 require 'json'
 require 'time'
 
+
+# TODO: handle weird failure cases
+# - no network while create_dishwasher
+# - no network while reading
+# - no network while updating
+
 module DishwasherHelper
   
-  #@@server_url='http://192.168.15.5:3000/api/v1/dishwashers'
-  @@server_url='http://cleanordirty.heroku.com/api/v1/dishwashers'
+  @@server_url='http://192.168.15.8:3000/api/v1/dishwashers'
+  #@@server_url='http://cleanordirty.heroku.com/api/v1/dishwashers'
+  
   
   def change_status
     @dishwasher = Dishwasher.find(@params['id'])
@@ -32,19 +39,31 @@ module DishwasherHelper
     @dishwasher = Dishwasher.create(d_hash)
     puts "Existing dishwasher created: #{d_hash}, #{@dishwasher.last_updated}"
     dishwasher_service_read   # create dishwasher object, but update
-    #render :action => :show
   end
   
   def show_or_create_dishwasher
-    @dishwasher = Dishwasher.find(:first)
-    if @dishwasher
-      dishwasher_service_read
-      #render :action => :show
+    $current_controller = self
+    if sync_dishwasher
+      render :action => :show
     else
       render :action => :new_or_existing
     end
   end
 
+  def sync_dishwasher
+    puts "DishwasherHelper sync_dishwasher"
+    @dishwasher = Dishwasher.find(:first)
+    if @dishwasher
+      if ($sync_status != :success)
+        puts "syncing"
+        dishwasher_service_read
+      else
+        puts "showing"
+      end
+      @dishwasher
+    end
+  end
+  
   def show_dishwasher
     puts "In show_dishwasher"
     @dishwasher = Dishwasher.find(:first)
@@ -86,6 +105,7 @@ module DishwasherHelper
     puts "dishwasher_create_callback: #{@params}"
     if @params['status'] != 'ok'
       puts "Error in dishwasher_create_callback"
+      $sync_status = :failure_to_create
     else
       @dishwasher = Dishwasher.find(:first)
       @dishwasher.update_attributes(
@@ -94,6 +114,7 @@ module DishwasherHelper
           :last_updated => Time.now.utc.to_i 
         }
       )
+      $sync_status = :success
     end
   end
 
@@ -109,8 +130,10 @@ module DishwasherHelper
     @dishwasher = Dishwasher.find(:first)
     if @params['status'] != 'ok'
       puts "Error in connection in dishwasher_read_callback"
+      $sync_status = :failure_to_recv
     else
       synchronize(@params['body'])
+      $sync_status = :success
     end
     WebView.navigate(url_for :action => :show_dishwasher)
   end
@@ -138,18 +161,29 @@ module DishwasherHelper
     Rho::AsyncHttp.post(
       :url => "#{@@server_url}/update/#{@dishwasher.code}",
       :body => ::JSON.generate({:name => @dishwasher.name, :status => @dishwasher.status}),
-      :callback => url_for(:action => :dummy_callback)
-    )
-  end
-
-  def dishwasher_service_delete
-    Rho::AsyncHttp.post(
-      :url => "#{@@server_url}/delete/#{@dishwasher.code}",
-      :callback => url_for(:action => :dummy_callback)
+      :callback => url_for(:action => :dishwasher_update_callback)
     )
   end
   
-  def dummy_callback
+  def dishwasher_update_callback
+    puts "dishwasher_update_callback: #{@params}"
+    @dishwasher = Dishwasher.find(:first)
+    if @params['status'] != 'ok'
+      puts "Error in connection in dishwasher_update_callback"
+      $sync_status = :failure_to_send
+    else
+      $sync_status = :success
+    end
+  end
+  
+  def dishwasher_service_delete
+    Rho::AsyncHttp.post(
+      :url => "#{@@server_url}/delete/#{@dishwasher.code}",
+      :callback => url_for(:action => :dishwasher_delete_callback)
+    )
+  end
+
+  def dishwasher_delete_callback
     puts "DUMMY callback: #{@params}"
   end
   

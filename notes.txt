@@ -23,3 +23,9 @@ TODOs:
 Date: 03/10/2011
 
 Created and merged rhohub repo
+
+**********************************************************************
+Date: 03/29/2011
+
+Sync algorithm:
+- On app activation: try to sync. On failure, set status :failure_to_get

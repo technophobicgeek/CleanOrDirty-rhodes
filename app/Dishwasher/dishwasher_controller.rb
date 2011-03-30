@@ -10,7 +10,8 @@ class DishwasherController < Rho::RhoController
   include ApplicationHelper
   include BrowserHelper
   include DishwasherHelper
-  
+
+
   #GET /Dishwasher
   def index
     @dishwashers = Dishwasher.find(:all)
