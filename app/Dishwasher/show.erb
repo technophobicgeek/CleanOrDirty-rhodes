@@ -26,3 +26,14 @@ Requirement:
     </div>
 </div>
 
+
+
+<div class="custom">
+  <span class="syncstatus">
+    <%=
+      ($sync_status == :success) ? "Synced":
+        (($sync_status == :failure_to_create) ? "Cannot be synced" :
+          "Not synced")
+    %>
+  </span>
+</div>

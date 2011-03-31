@@ -12,12 +12,13 @@
     <% if Dishwasher.count > 0 %>
       <li><a href="<%= url_for :controller => :Dishwasher, :action => :edit_dishwasher %>">Edit Dishwasher</a></li>
       <li><a href="<%= url_for :action => :reset %>">Remove Dishwasher</a></li>
-      <li>
-         <div class="itemLabel">Code</div>
-         <div class="itemValue">
-          <%=  show_dishwasher_code %>
-         </div>
-      </li>
+      <% code = show_dishwasher_code %>
+      <% if code %>
+        <li>
+           <div class="itemLabel">Code</div>
+           <div class="itemValue"><%=  code %></div>
+        </li>
+      <% end %>
     <%end%>
   </ul>
 </div>

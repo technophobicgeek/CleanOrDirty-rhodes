@@ -11,11 +11,12 @@ class AppApplication < Rho::RhoApplication
     super
 
     $current_controller = nil
+    $rholog = RhoLog.new
   end
 
 
   def on_deactivate_app
-    puts "on_deactivate_app"
+    $rholog.info("APP","on_deactivate_app")
     if $current_controller
       $current_controller.sync_dishwasher if $sync_status == :failure_to_send
     end

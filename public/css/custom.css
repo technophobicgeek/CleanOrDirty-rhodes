@@ -33,3 +33,9 @@
 .toolbar .regularButton .active {
   background-color: #f00;
 }
+
+.custom span.syncstatus {
+  text-align: center;
+  font-size : 1em;
+  padding-top : 20px ;
+}
