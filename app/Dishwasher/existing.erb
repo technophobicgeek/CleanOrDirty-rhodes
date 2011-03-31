@@ -1,0 +1,22 @@
+<div class="pageTitle">
+  <h1>New <%= @dishwasher.title %></h1>
+</div>
+
+
+
+<div class="content">
+  <form method="POST" action="<%= url_for :action => :existing_dishwasher %>">
+    <input type="hidden" name="id" value="<%= @dishwasher.object %>"/>
+    <ul>
+
+          <li>
+            <label for="dishwasher[code]" class="fieldLabel">Code</label>
+            <input type="text" name="dishwasher[code]" <%=
+            placeholder("Code") %> />
+          </li>
+
+    </ul>
+    <input type="hidden" name="dishwasher[status]" value="dirty"/>
+    <input type="submit" class="standardButton" value="Save"/>
+  </form>
+</div>
