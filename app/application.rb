@@ -6,7 +6,13 @@ class AppApplication < Rho::RhoApplication
     @tabs = nil
     @@tabbar = nil
     
-    @@toolbar = [{:action => :home}, {:action => :separator},{:action => :options} ]
+    @@toolbar = [
+      {:action => :home},
+      {:action => :separator},
+      {:action => :home, :icon => "/public/images/resync.png"},
+      {:action => :separator},
+      {:action => :options}
+    ]
     
     super
 
@@ -14,7 +20,13 @@ class AppApplication < Rho::RhoApplication
     $rholog = RhoLog.new
   end
 
-
+  def on_activate_app
+    $rholog.info("APP","on_activate_app")
+    if $current_controller
+      $current_controller.sync_dishwasher
+    end
+  end
+  
   def on_deactivate_app
     $rholog.info("APP","on_deactivate_app")
     if $current_controller
