@@ -23,7 +23,7 @@ module DishwasherHelper
       :body => ::JSON.generate({:name => @dishwasher.name, :status => @dishwasher.status}),
       :callback => url_for(:action => :dishwasher_create_callback)
     )
-    render :action => :wait
+      WebView.navigate(url_for :action => :wait)
   end
 
   def dishwasher_create_callback
@@ -33,12 +33,7 @@ module DishwasherHelper
       log "Error in dishwasher_create_callback"
       $sync_status = :failure_to_create
     else
-      @dishwasher.update_attributes(
-        {
-          :code => @params['body']['code'],
-          :last_updated => Time.now.utc.to_i 
-        }
-      )
+      @dishwasher.update_attributes({:code => @params['body']['code']})
       $sync_status = :success
     end
     WebView.navigate(url_for :action => :show_dishwasher)
@@ -99,7 +94,7 @@ module DishwasherHelper
         :body => ::JSON.generate({:name => @dishwasher.name, :status => @dishwasher.status}),
         :callback => url_for(:action => :dishwasher_update_callback)
       )
-      render :action => :wait
+      WebView.navigate(url_for :action => :wait)
     else
       $sync_status = :failure_to_create
     end

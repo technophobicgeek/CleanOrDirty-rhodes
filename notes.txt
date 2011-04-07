@@ -29,3 +29,13 @@ Date: 03/29/2011
 
 Sync algorithm:
 - On app activation: try to sync. On failure, set status :failure_to_get
+
+
+**********************************************************************
+Date: 04/06/2011
+
+Cleaning up code:
+- Code blocks
+
+Testing
+- mocks for web server behavior?

@@ -31,7 +31,7 @@
 }
 
 .toolbar .regularButton .active {
-  background-color: #f00;
+  background-color: #66ccFF;
 }
 
 .custom span.syncstatus {
@@ -42,5 +42,10 @@
 .custom span.syncmessage {
   text-align: center;
   font-size : 2em;
+  padding-top : 50px ;
+}
+.custom span.aboutmessage {
+  text-align: center;
+  font-size : 1.5em;
   padding-top : 50px ;
 }
