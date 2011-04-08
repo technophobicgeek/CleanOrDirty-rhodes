@@ -15,27 +15,19 @@ class DishwasherController < Rho::RhoController
 # Creating information
   
   def new
-    @dishwasher = Dishwasher.new
-    render :action => :new
+    gen_dw_view :new
   end
   
-  def create_dishwasher
-    @dishwasher = Dishwasher.create(@params['dishwasher'])
-    @dishwasher.last_updated = Time.now.utc.to_i
-    @dishwasher.save
-    dishwasher_service_create
+  def new_dishwasher
+    gen_dw_controller Time.now.utc.to_i
   end
   
   def existing
-    @dishwasher = Dishwasher.new
-    render :action => :existing
+    gen_dw_view :existing
   end
   
   def existing_dishwasher
-    @dishwasher = Dishwasher.create( @params['dishwasher'])
-    @dishwasher.last_updated = 0
-    @dishwasher.save
-    dishwasher_service_read   # create dishwasher object, but update
+    gen_dw_controller 0
   end
 
 # Showing information
@@ -54,8 +46,7 @@ class DishwasherController < Rho::RhoController
     @dishwasher = Dishwasher.find(:first)
     if @dishwasher
       if ($sync_status != :success)
-        log "syncing"
-        dishwasher_service_read
+        synchronize
       else
         log "showing"
       end
@@ -89,13 +80,25 @@ class DishwasherController < Rho::RhoController
 
   private
   
+    def gen_dw_view(page)
+      @dishwasher = Dishwasher.new
+      render :action => page
+    end
+
+    def gen_dw_controller(t)
+      @dishwasher = Dishwasher.create( @params['dishwasher'])
+      @dishwasher.last_updated = t
+      @dishwasher.save
+      synchronize
+    end
+
     def find_and_update(id)
       log "find_and_update #{id}"
       @dishwasher = Dishwasher.find(id)
       new_values = yield @dishwasher
       log "New values: #{new_values}"
       @dishwasher.update_attributes(new_values) if @dishwasher
-      dishwasher_service_update
+      synchronize
     end
 
 end
