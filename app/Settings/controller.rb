@@ -15,7 +15,6 @@ class SettingsController < Rho::RhoController
 
   def do_reset
     Rhom::Rhom.database_full_reset
-    SyncEngine.dosync
     @msg = "Database has been reset."
     redirect :action => :index, :query => {:msg => @msg}
   end

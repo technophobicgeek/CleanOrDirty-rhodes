@@ -44,14 +44,8 @@ class DishwasherController < Rho::RhoController
   def sync_dishwasher
     log "DishwasherHelper sync_dishwasher"
     @dishwasher = Dishwasher.find(:first)
-    if @dishwasher
-      if ($sync_status != :success)
-        synchronize
-      else
-        log "showing"
-      end
-      @dishwasher
-    end
+    synchronize if @dishwasher
+    @dishwasher
   end
   
   def show_dishwasher
@@ -68,7 +62,9 @@ class DishwasherController < Rho::RhoController
   
   def change_status
     find_and_update (@params['id']) do |d|
-      {:status => (d.status  == 'dirty' ? 'clean' : 'dirty')}
+      {
+        :status => (d.status  == 'dirty' ? 'clean' : 'dirty'),
+      }
     end
   end
 
@@ -88,15 +84,16 @@ class DishwasherController < Rho::RhoController
     def gen_dw_controller(t)
       @dishwasher = Dishwasher.create( @params['dishwasher'])
       @dishwasher.last_updated = t
+      @dishwasher.owner = true if t > 0
       @dishwasher.save
+      $sync_status = :unsynced
       synchronize
     end
 
     def find_and_update(id)
-      log "find_and_update #{id}"
       @dishwasher = Dishwasher.find(id)
       new_values = yield @dishwasher
-      log "New values: #{new_values}"
+      new_values['last_updated'] = Time.now.utc.to_i
       @dishwasher.update_attributes(new_values) if @dishwasher
       synchronize
     end
