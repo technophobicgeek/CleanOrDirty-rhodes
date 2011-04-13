@@ -6,7 +6,6 @@
   text-align: center;
   border-spacing: 10px;
 }
-
 .custom span {
   display: table-cell;
   margin:auto;
@@ -15,17 +14,14 @@
   text-align: center;
   font-size : 8em
 }
-
 .custom span.confirm {
   text-align: center;
   font-size : 6em
 }
-
 .custom span.syncing {
   text-align: center;
   font-size : 4em
 }
-
 .toolbar .centerItem h1 {
   font-size : 2em
 }
@@ -33,7 +29,6 @@
 .toolbar .regularButton .active {
   background-color: #66ccFF;
 }
-
 .custom span.syncstatus {
   text-align: center;
   font-size : 1em;
@@ -48,4 +43,10 @@
   text-align: center;
   font-size : 1.5em;
   padding-top : 50px ;
+}
+.custom span.help {
+  text-align: left;
+  font-size : 0.7em;
+  padding-top : 100px ;
+  font-family : "Times",serif;
 }

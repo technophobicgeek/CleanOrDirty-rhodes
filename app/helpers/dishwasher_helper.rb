@@ -4,8 +4,8 @@ require 'time'
 
 module DishwasherHelper
   
-  @@server_url='http://192.168.15.9:3000/api/v1/dishwashers'
-  #@@server_url='http://cleanordirty.heroku.com/api/v1/dishwashers'
+  #@@server_url='http://192.168.15.9:3000/api/v1/dishwashers'
+  @@server_url='http://cleanordirty.heroku.com/api/v1/dishwashers'
   
   def log(msg)
     $rholog.info("APP",msg)
@@ -41,12 +41,12 @@ module DishwasherHelper
     if @params['status'] == 'ok'
       @dishwasher.update_attributes(@params['body'])
       $sync_status = :success
-      $err_msg = "Synced :-)"
+      $sync_msg = "Synced :-)"
       WebView.navigate(url_for :action => :show_dishwasher)
     else
       $sync_status = (@dishwasher.code ? (:failure_to_send) : (:failure_to_create))
       err_code = @params['http_error']
-      $err_msg = "Not Synced - Connection issues :-("
+      $sync_msg = "Not Synced - Connection issues :-("
       if err_code == "404"
         Alert.show_popup ({
           :message => 'Invalid code. Would you like to try again?',
@@ -67,13 +67,13 @@ module DishwasherHelper
     if id == "Yes"
       log "Yes popup button"
       $sync_status = :unsynced
-      $err_msg = ""
+      $sync_msg = ""
       Rhom::Rhom.database_full_reset
       WebView.navigate(url_for :action => :existing)
     else
       log "No popup button"
       if @dishwasher
-        $err_msg = "Not Synced - Can't find a dishwasher with the code you've entered :-(" unless @dishwasher.owner
+        $sync_msg = "Not Synced - Can't find a dishwasher with the code you've entered :-(" unless @dishwasher.owner
       end
       $sync_status = :invalid_code
       WebView.navigate(url_for :action => :show_dishwasher)
